@@ -9,7 +9,113 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      groups: {
+        Row: {
+          color: string | null
+          created_at: string | null
+          created_by: number | null
+          description: string | null
+          id: number
+          name: string
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string | null
+          created_by?: number | null
+          description?: string | null
+          id?: number
+          name: string
+        }
+        Update: {
+          color?: string | null
+          created_at?: string | null
+          created_by?: number | null
+          description?: string | null
+          id?: number
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "groups_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      shopping_lists: {
+        Row: {
+          budget: number | null
+          created_at: string | null
+          created_by: number | null
+          group_id: number | null
+          id: number
+          name: string
+          progress: number | null
+        }
+        Insert: {
+          budget?: number | null
+          created_at?: string | null
+          created_by?: number | null
+          group_id?: number | null
+          id?: number
+          name: string
+          progress?: number | null
+        }
+        Update: {
+          budget?: number | null
+          created_at?: string | null
+          created_by?: number | null
+          group_id?: number | null
+          id?: number
+          name?: string
+          progress?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shopping_lists_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shopping_lists_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      users: {
+        Row: {
+          created_at: string | null
+          email: string
+          id: number
+          name: string
+          password: string
+          role: Database["public"]["Enums"]["user_role"] | null
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          id?: number
+          name: string
+          password: string
+          role?: Database["public"]["Enums"]["user_role"] | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          id?: number
+          name?: string
+          password?: string
+          role?: Database["public"]["Enums"]["user_role"] | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -18,7 +124,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      user_role: "organizer" | "collaborator"
     }
     CompositeTypes: {
       [_ in never]: never
